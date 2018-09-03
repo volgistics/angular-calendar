@@ -89,7 +89,7 @@
     "copyfiles": "^2.0.0",
     "core-js": "^2.5.4",
     "css-loader": "^1.0.0",
-    "date-fns": "^1.29.0",
+    "date-fns": "^2.0.0-alpha.16",
     "flatpickr": "^4.5.2",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
@@ -132,7 +132,7 @@
   "dependencies": {
     "angular-draggable-droppable": "^4.0.1",
     "angular-resizable-element": "^3.2.2",
-    "calendar-utils": "^0.2.0",
+    "calendar-utils": "^1.0.0-alpha.2",
     "positioning": "^1.4.0"
   },
   "sideEffects": [
