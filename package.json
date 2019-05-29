@@ -57,7 +57,7 @@
     "@angular/cli": "^8.0.0",
     "@angular/common": "^8.0.0",
     "@angular/compiler": "^8.0.0",
-    "@angular/compiler-cli": "^8.0.0",
+    "@angular/compiler-cli": "https://github.com/angular/compiler-cli-builds",
     "@angular/core": "^8.0.0",
     "@angular/forms": "^8.0.0",
     "@angular/language-service": "^8.0.0",
