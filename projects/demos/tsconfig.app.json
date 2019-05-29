@@ -8,6 +8,7 @@
     "trace": true,
     "strictInjectionParameters": true,
     "preserveWhitespaces": true,
-    "fullTemplateTypeCheck": true
+    "fullTemplateTypeCheck": true,
+    "enableIvy": true
   }
 }
