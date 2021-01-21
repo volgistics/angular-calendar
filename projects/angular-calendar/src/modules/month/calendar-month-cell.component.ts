@@ -3,7 +3,7 @@ import {
   Input,
   Output,
   EventEmitter,
-  TemplateRef
+  TemplateRef,
 } from '@angular/core';
 import { MonthViewDay, CalendarEvent } from 'calendar-utils';
 import { isWithinThreshold, trackByEventId } from '../common/util';
@@ -27,13 +27,20 @@ import { PlacementArray } from 'positioning';
       let-trackByEventId="trackByEventId"
       let-validateDrag="validateDrag"
     >
-      <div class="cal-cell-top">
-        <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{
-          day.badgeTotal
-        }}</span>
-        <span class="cal-day-number">{{
-          day.date | calendarDate: 'monthViewDayNumber':locale
-        }}</span>
+      <div
+        class="cal-cell-top"
+        [attr.aria-label]="
+          { day: day, locale: locale } | calendarA11y: 'monthCell'
+        "
+      >
+        <span aria-hidden="true">
+          <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{
+            day.badgeTotal
+          }}</span>
+          <span class="cal-day-number">{{
+            day.date | calendarDate: 'monthViewDayNumber':locale
+          }}</span>
+        </span>
       </div>
       <div class="cal-events" *ngIf="day.events.length > 0">
         <div
@@ -57,7 +64,9 @@ import { PlacementArray } from 'positioning';
           [dropData]="{ event: event, draggedFrom: day }"
           [dragAxis]="{ x: event.draggable, y: event.draggable }"
           [validateDrag]="validateDrag"
-          (mwlClick)="eventClicked.emit({ event: event })"
+          [touchStartLongPress]="{ delay: 300, delta: 30 }"
+          (mwlClick)="eventClicked.emit({ event: event, sourceEvent: $event })"
+          [attr.aria-hidden]="{} | calendarA11y: 'hideMonthCellEvents'"
         ></div>
       </div>
     </ng-template>
@@ -90,8 +99,8 @@ import { PlacementArray } from 'positioning';
     '[class.cal-out-month]': '!day.inMonth',
     '[class.cal-has-events]': 'day.events.length > 0',
     '[class.cal-open]': 'day === openDay',
-    '[class.cal-event-highlight]': '!!day.backgroundColor'
-  }
+    '[class.cal-event-highlight]': '!!day.backgroundColor',
+  },
 })
 export class CalendarMonthCellComponent {
   @Input() day: MonthViewDay;
@@ -114,9 +123,9 @@ export class CalendarMonthCellComponent {
 
   @Output() unhighlightDay: EventEmitter<any> = new EventEmitter();
 
-  @Output()
-  eventClicked: EventEmitter<{ event: CalendarEvent }> = new EventEmitter<{
+  @Output() eventClicked = new EventEmitter<{
     event: CalendarEvent;
+    sourceEvent: MouseEvent;
   }>();
 
   trackByEventId = trackByEventId;
